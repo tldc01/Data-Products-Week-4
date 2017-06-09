@@ -1,0 +1,58 @@
+---
+title: "Developing Data Products Week 4 Assignment - Pitch Presentation"
+author: "tldc01"
+date: "June 9, 2017"
+output: ioslides_presentation
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+## Overview
+
+This slide show will introduce you to Pizza Place's Pricing Tool
+
+- What is the app and what is its purpose?
+- How does one use the app?
+- What does an example look like?
+
+## Purpose
+
+*This application prices a pizza based on the size and toppings selected.*
+
+As it dynamically updates the price based on modifying the options, the user has immediate information avaiable to: 
+ - test various scenarios
+ - decide which pizza best fits a budget and needs
+
+## Using the Application
+
+1.  Using the sliding scale, select the pizza diameter (in inches).
+2.  Choose which topping(s) you want by checking the box next to each option.
+3.  The price for your pizza will be displayed on the right hand side window.
+4.  You can iteratively go back and modify your pizza; the new price will be reflected.
+
+## Demo
+
+```{r, echo=FALSE}
+library(shiny)
+sidebarLayout(
+    sidebarPanel(
+       sliderInput("size", "Select Your Pie Size (Inches - Diameter):", 8, 16, value = 14),
+       h3("Now Choose Your Toppings:"),    
+       checkboxInput("mushrooms","Mushrooms", value=FALSE),
+       checkboxInput("pineapple","Pineapple", value=TRUE),
+       checkboxInput("ham","Ham", value=TRUE),
+       checkboxInput("sausage","Sausage", value=FALSE),
+       checkboxInput("extra_cheese","Extra Cheese", value=FALSE)
+    ),
+
+    mainPanel(
+        h3("Cost of this Option ($):"),
+        calc_price <- renderText(0.8* input$size + 1.25*input$mushrooms + 1.5*input$pineapple + 2.0*input$ham + 1.75*input$sausage + 2.25*input$extra_cheese)
+    
+        
+)
+)
+
+```
